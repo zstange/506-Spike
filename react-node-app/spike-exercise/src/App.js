@@ -4,7 +4,7 @@ import Login from './Login';
 import RenterHome from './RenterHome';
 import CreateAccount from './CreateAccount';
 import RenterApplication from './RenterApplication'
-import { BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch, withRouter} from 'react-router-dom';
 
 function App() {
   const [data, setData] = React.useState(null);
@@ -21,15 +21,31 @@ function App() {
       <header className="App-header">
           <Switch>
           <Route 
-            path = "/" 
+            exact path = "/" 
             render={() => (
               <Login data={data} />
             )}
           />
-          <Route path = "/Login" exact component={Login} data={data}/>
-          <Route path = "/RenterHome" exact component={RenterHome}/>
-          <Route path = "/CreateAccount" exact component={CreateAccount}/>
-          <Route path = "/RenterApplication" exact component={RenterApplication}/>
+          <Route  exact path = "/Login" 
+          render={() => (
+            <Login data={data} />
+          )}
+          />
+          <Route exact path = "/RenterHome" 
+           render={() => (
+            <RenterHome data={data} />
+          )}
+          />
+          <Route exact path = "/CreateAccount" 
+          render={() => (
+            <CreateAccount data={data} />
+          )}
+          />
+          <Route path = "/RenterApplication" 
+          render={() => (
+            <RenterApplication data={data} />
+          )}
+          />
         </Switch> 
       </header>
     </div>

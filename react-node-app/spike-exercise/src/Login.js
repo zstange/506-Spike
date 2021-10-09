@@ -1,11 +1,12 @@
 import React, {useState} from "react"; 
 import Button from "react-bootstrap/Button";
 import FormControl from "react-bootstrap/FormControl"
+import {Route, withRouter} from 'react-router-dom'
 
 class Login extends React.Component {
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {value: '', email: "", password: ""};  /* state array */
   }
 
@@ -53,4 +54,4 @@ class Login extends React.Component {
   }
 }
 
-export default Login;
+export default withRouter(Login);
