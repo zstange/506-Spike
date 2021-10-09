@@ -4,7 +4,8 @@ import Login from './Login';
 import RenterHome from './RenterHome';
 import CreateAccount from './CreateAccount';
 import RenterApplication from './RenterApplication'
-import { BrowserRouter as Router, Route, Switch, withRouter} from 'react-router-dom';
+import RenterPayment from './RenterPayment'
+import { BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 
 function App() {
   const [data, setData] = React.useState(null);
@@ -41,9 +42,14 @@ function App() {
             <CreateAccount data={data} />
           )}
           />
-          <Route path = "/RenterApplication" 
+          <Route exact path = "/RenterApplication" 
           render={() => (
             <RenterApplication data={data} />
+          )}
+          />
+          <Route exact path = "/RenterPayment" 
+          render={() => (
+            <RenterPayment data={data} />
           )}
           />
         </Switch> 
