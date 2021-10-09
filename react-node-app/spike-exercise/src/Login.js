@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import Button from "react-bootstrap/Button";
 import FormControl from "react-bootstrap/FormControl"
 import {Route, withRouter} from 'react-router-dom'
+import './App.css';
 
 class Login extends React.Component {
 
@@ -23,6 +24,11 @@ class Login extends React.Component {
   /* Handles the redirect to the create account page */
   handleRentalApplicationTEST(event) {
     this.props.history.push("RenterApplication");
+  }
+
+  /* Handles the redirect to the renter payment page */
+  handleRenterPaymentTEST(event) {
+    this.props.history.push("RenterPayment");
   }
 
   /* TODO -- Handles the redirect to the account page */
@@ -48,6 +54,7 @@ class Login extends React.Component {
           <Button onClick = {() => this.handleCreateAccount()}>Create Account</Button>
           <Button onClick = {() => this.handleLogin()}>Login</Button>
           <Button onClick = {() => this.handleRentalApplicationTEST()}>RenterApplicationTEST</Button>
+          <Button onClick = {() => this.handleRenterPaymentTEST()}>RenterPaymetTEST</Button>
         </div>   
       </>
     );
