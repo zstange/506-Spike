@@ -1,6 +1,7 @@
 import React, {useState} from "react"; 
 import Button from "react-bootstrap/Button";
 import FormControl from "react-bootstrap/FormControl"
+import {withRouter} from 'react-router-dom'
 
 class CreateAccount extends React.Component {
 
@@ -47,4 +48,4 @@ class CreateAccount extends React.Component {
   }
 }
 
-export default CreateAccount;
+export default withRouter(CreateAccount);
