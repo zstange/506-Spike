@@ -1,9 +1,86 @@
 import React, {useState} from "react"; 
 import Axios from 'axios';
-import Button from "react-bootstrap/Button";
 import FormControl from "react-bootstrap/FormControl"
+import { Form, Button, Row, Col} from "react-bootstrap";
 import {Route, withRouter} from 'react-router-dom'
 import './App.css';
+
+
+function LoginPage() {
+  const [validated, setValidated] = useState(false);
+
+  const handleSubmit = (event) => {
+    const form = event.currentTarget;
+    if (form.checkValidity() === false) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+    
+    setValidated(true);
+      
+    // Output Caputured Data
+    if (form.checkValidity() === true) {
+      console.log(event.target.elements.firstName.value)
+      console.log(event.target.elements.lastName.value)
+      console.log(event.target.elements.password.value)
+      console.log(event.target.elements.phoneNumber.value)
+      console.log(event.target.elements.email.value)
+      console.log(event.target.elements.address1.value)
+      console.log(event.target.elements.address2.value)
+      console.log(event.target.elements.city.value)
+      console.log(event.target.elements.state1.value)
+      console.log(event.target.elements.zipcode.value)
+
+      Axios.post("http://localhost:3001/CreateAccount",{
+        email: this.state.email.trim(),
+        password: this.state.password.trim(),
+        }).then((response) => {
+            this.props.history.push('/Login');
+        });
+      }          
+    };   
+
+  const handleCancel = (event) => {
+      setValidated(true);
+  }
+
+  return (
+      <>          
+          <Row style={{padding: '2%'}}>
+          <div >            
+              <Form noValidate validated={validated} action="RenterHome" onSubmit={handleSubmit} onCancel={handleCancel}>
+                  <Form.Group as={Row} className="mb-3" controlId="validationEmail">
+                      <Form.Label column sm="3" className="createAccountLabels">Email</Form.Label>
+                      <Col sm="9" >
+                          <Form.Control 
+                          required
+                          type="email"
+                          name="email"
+                          placeholder="Email address"
+                          />
+                      </Col>                    
+                  </Form.Group>
+
+                  <Form.Group as={Row} className="mb-1" controlId="validationPassword">
+                      <Form.Label column sm="3" className="createAccountLabels">Password</Form.Label>
+                      <Col sm="9">
+                          <Form.Control
+                          required
+                          type="password"
+                          name="password"
+                          placeholder="Password"
+                          />
+                      </Col>                    
+                  </Form.Group>
+
+                  <Button className="m-4" type="submit" style={{display: 'inline-block'}}>Submit</Button>          
+              </Form>        
+          </div>
+     
+          </Row> 
+      </>
+  );
+}
 
 class Login extends React.Component {
 
@@ -40,38 +117,19 @@ class Login extends React.Component {
     this.props.history.push("AdminRequests");
   }
 
-  /* TODO -- Handles the redirect to the account page */
-  handleLogin(event) { /* Check if either email or password boxes are blank */
-    let username = this.state.email.trim();
-    let password = this.state.password.trim();
-
-    if (username == "" || password == "") { 
-        alert("Please fill out both an email and password.");
-        return;
-    }
-
-    Axios.post("http://localhost:3001/login",{
-    username, password 
-    }).then((response) => {
-      if(response.data.message){
-        alert("Wrong username/password combination!");
-      }
-        else{
-          this.props.history.push('/RenterHome');
-        }
-    })
-  }
-
   render() {
     return (
       <>
+      
         <img src="MadRentals_Logo_Light.png" height="auto" width="auto"></img>
-        <FormControl placeholder = "Email" value={this.state.email} onChange={this.handleChange.bind(this, "email")} />
-        <FormControl placeholder = "Password" value={this.state.password}  onChange={this.handleChange.bind(this, "password")} />
-        <div>
-          <Button onClick = {() => this.handleCreateAccount()}>Create Account</Button>
-          <Button onClick = {() => this.handleLogin()}>Login</Button>
-        </div>   
+
+        <LoginPage />
+        <div> 
+          <div>
+                <p className="loginText">Don't have an account yet?</p>
+          </div>         
+          <Button variant="info" onClick = {() => this.handleCreateAccount()}>Create Account</Button>
+		    </div>   
       </>
     );
   }

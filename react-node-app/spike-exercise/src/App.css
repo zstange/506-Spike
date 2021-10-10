@@ -1,3 +1,4 @@
+@import url("https://use.typekit.net/tce1zir.css");
 .App {
   text-align: center;
 }
@@ -55,11 +56,16 @@
   vertical-align: middle;
   margin-top: 10px;
   color: black;
+  font-family: factoria,serif;
+  font-weight: 100;
+  font-style: normal;
 }
+
 .rentalFormLabels {
   text-align: left;
   vertical-align: middle;
   color: black;
+  
 }
 
 .sidebar {
@@ -74,3 +80,29 @@
   left: calc(20vw + 5px);
   top: 5px;
 }
+
+.createAccountHeaders {
+  text-align: center;
+  vertical-align: middle;
+  margin-bottom: 1px;
+  color: white;
+  font-family: factoria,serif;
+  font-weight: 100;
+  font-style: normal;
+}
+.createAccountLabels {
+  text-align: left;
+  vertical-align: middle;
+  color: white;
+  font-family: factoria,serif;
+  font-weight: 100;
+  font-style: normal;
+}
+
+.loginText {
+  font-size: 1.5em;
+  font-family: factoria,serif;
+  font-weight: 100;
+  font-style: normal;
+}
+
