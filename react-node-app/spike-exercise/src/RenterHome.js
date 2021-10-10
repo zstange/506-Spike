@@ -7,6 +7,7 @@ import { Tab, Tabs } from "react-bootstrap";
 import RenterApplication from "./RenterApplication";
 import RenterPayment from "./RenterPayment";
 import RenterRequests from "./RenterRequests";
+import {Route, withRouter} from 'react-router-dom'
 
 class RenterHome extends React.Component {
 
@@ -55,13 +56,13 @@ class RenterHome extends React.Component {
                   <RenterPayment/>
               </div>
             </Tab>
-            <Tab
+            {/* <Tab
               eventKey="requests" title="Maintenance Request"
             >
               <div>
                   <RenterRequests/>
               </div>
-            </Tab>
+            </Tab> */}
               
           </Tabs>
         </div>
@@ -72,4 +73,4 @@ class RenterHome extends React.Component {
   }
 }
 
-export default RenterHome;
+export default withRouter(RenterHome);

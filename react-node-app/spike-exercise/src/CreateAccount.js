@@ -17,37 +17,30 @@ function CreateAccountForm() {
       
     // Output Caputured Data
     if (form.checkValidity() === true) {
-      console.log(event.target.elements.firstName.value)
-      console.log(event.target.elements.lastName.value)
-      console.log(event.target.elements.password.value)
-      console.log(event.target.elements.phoneNumber.value)
-      console.log(event.target.elements.email.value)
-      console.log(event.target.elements.address1.value)
-      console.log(event.target.elements.address2.value)
-      console.log(event.target.elements.city.value)
-      console.log(event.target.elements.state1.value)
-      console.log(event.target.elements.zipcode.value)
 
       Axios.post("http://localhost:3001/CreateAccount",{
-        firstName: this.state.firstName.trim(),
-        lastName: this.state.lastName.trim(),
-        password: this.state.password.trim(),
-        phoneNumber: this.state.phoneNumber.trim(),
-        email: this.state.email.trim(),
-        address1: this.state.address1.trim(),
-        address2: this.state.address2.trim(),
-        city: this.state.city.trim(),
-        state1: this.state.state1.trim(),
-        zipcode: this.state.zipcode.trim()
+        firstName: event.target.elements.firstName.value,
+        lastName: event.target.elements.lastName.value,
+        password: event.target.elements.password.value,
+        phoneNumber: event.target.elements.phoneNumber.value,
+        email: event.target.elements.email.value,
+        address1: event.target.elements.address1.value,
+        address2: event.target.elements.address2.value,
+        city: event.target.elements.city.value,
+        state1: event.target.elements.state1.value,
+        zipcode: event.target.elements.zipcode.value
         }).then((response) => {
-            this.props.history.push('/Login');
+            if(response.data.err) {
+                alert(response.data.err);
+            }
+            else if (response.data.message) {
+                alert(response.data.message);
+            } else {
+                window.location = "/Login";
+            }
         });
       }          
-    };   
-
-  const handleCancel = (event) => {
-      setValidated(true);
-  }
+    };
 
   return (
       <>
@@ -59,7 +52,7 @@ function CreateAccountForm() {
           
           <Row style={{padding: '5%'}}>
           <div >            
-              <Form noValidate validated={validated} action="RenterHome" onSubmit={handleSubmit} onCancel={handleCancel}>
+              <Form noValidate validated={validated} onSubmit={handleSubmit}>
                   <h4 className="createAccountLabels mb-3">Personal Information:</h4>
                   <Form.Group as={Row} className="mb-3" controlId="validationFirstName">
                       <Form.Label column sm="3" className="createAccountLabels">First Name</Form.Label>

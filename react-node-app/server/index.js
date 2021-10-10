@@ -14,38 +14,50 @@ const db = mysql.createPool({
 	database: 'spikedb'
 });
 app.post("/CreateAccount", (req, res) => {
-  const username = req.body.username
+  const firstName = req.body.firstName
+  const lastName = req.body.lastName
   const password = req.body.password
+  const phoneNumber = req.body.phoneNumber
+  const email = req.body.email
+  const address1 = req.body.address1
+  const address2 = req.body.address2
+  const city = req.body.city
+  const state1 = req.body.state1
+  const zipcode = req.body.zipcode
+
   const sqlInsert = 
-  "INSERT INTO dbuser (email, password) VALUES (?, ?);"
-  db.query(sqlInsert, [username, password], (err, result) => {
+  "INSERT INTO dbuser (firstName, lastName,password,phoneNumber,email,address1,address2,city,state1,zipcode) VALUES (?,?,?,?,?,?,?,?,?,?);"
+  db.query(sqlInsert, [firstName, lastName,password,phoneNumber,email,address1,address2,city,state1,zipcode]
+    , (err, result) => {
     if(err){
       res.send({err: err});
     }
-      if (result.length > 0){
-        res.send(result)
-      }
-      else{
-        res.send({message: "Please fill out both an email and password."})
+    else if (result != ""){
+      var redir = { redirect: "/Login" };
+      return res.json(redir);
+    }
+    else{
+      res.send({message: "Please fill out both an email and password."})
     }
   });
 });
 
-app.post("/login", (req, res) => {
-  const username = req.body.username
+app.post("/Login", (req, res) => {
+  const email = req.body.email
   const password = req.body.password
 
   const sqlInsert = 
   "SELECT * FROM dbuser WHERE email = ? AND password = ?"
-  db.query(sqlInsert, [username, password], (err, result) => {
+  db.query(sqlInsert, [email, password], (err, result) => {
     if(err){
-      res.send({err: err});
+      return res.json({err: err});
     }
-      if (result.length > 0){
-        res.send(result)
-      } else{
-          res.send({message: "Wrong username/password combination!"})
-      }
+    else if (result != ""){
+      var redir = { redirect: "/RenterHome" };
+      return res.json(redir);
+    } else{
+        return res.json({message: "Wrong username/password combination!"})
+    }
 
     
   });

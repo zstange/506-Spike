@@ -7,16 +7,19 @@ import RenterApplication from './RenterApplication'
 import RenterPayment from './RenterPayment'
 import RenterRequests from './RenterRequests'
 import AdminRequests from './AdminRequests'
-import { BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch, useHistory} from 'react-router-dom';
+
+
 
 function App() {
-  const [data, setData] = React.useState(null);
+  // const [data, setData] = React.useState(null);
+  const history = useHistory();
 
-  React.useEffect(() => {
-    fetch("/api")
-      .then((res) => res.json())
-      .then((data) => setData(data.message));
-  }, []);
+  // React.useEffect(() => {
+  //   fetch("/")
+  //     .then((res) => res.json())
+  //     .then((data) => setData(data.message));
+  // }, []);
 
   return (
     <Router>
@@ -26,42 +29,42 @@ function App() {
           <Route 
             exact path = "/" 
             render={() => (
-              <Login data={data} />
+              <Login  history={history}/>
             )}
           />
           <Route  exact path = "/Login" 
           render={() => (
-            <Login data={data} />
+            <Login history={history}/>
           )}
           />
           <Route exact path = "/RenterHome" 
            render={() => (
-            <RenterHome data={data} />
+            <RenterHome history={history} />
           )}
           />
           <Route exact path = "/CreateAccount" 
           render={() => (
-            <CreateAccount data={data} />
+            <CreateAccount  />
           )}
           />
           <Route exact path = "/RenterApplication" 
           render={() => (
-            <RenterApplication data={data} />
+            <RenterApplication  />
           )}
           />
           <Route exact path = "/RenterPayment" 
           render={() => (
-            <RenterPayment data={data} />
+            <RenterPayment  />
           )}
           />
           <Route path = "/RenterRequests" 
           render={() => (
-            <RenterRequests data={data} />
+            <RenterRequests  />
           )}
           />
           <Route path = "/AdminRequests" 
           render={() => (
-            <AdminRequests data={data} />
+            <AdminRequests  />
           )}
           />
         </Switch> 
