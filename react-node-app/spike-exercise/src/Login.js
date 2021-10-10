@@ -45,14 +45,13 @@ class Login extends React.Component {
     let username = this.state.email.trim();
     let password = this.state.password.trim();
 
-    if (this.state.email.trim().length == 0 || this.state.password.trim().length == 0) { 
+    if (username == "" || password == "") { 
         alert("Please fill out both an email and password.");
         return;
-      }
+    }
 
     Axios.post("http://localhost:3001/login",{
-    username: this.state.email.trim(),
-    password: this.state.password.trim()
+    username, password 
     }).then((response) => {
       if(response.data.message){
         alert("Wrong username/password combination!");
