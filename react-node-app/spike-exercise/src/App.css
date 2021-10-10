@@ -53,17 +53,24 @@
 .rentalFormHeaders {
   text-align: center;
   vertical-align: middle;
-  margin-bottom: 1px;
+  margin-top: 10px;
+  color: black;
 }
 .rentalFormLabels {
   text-align: left;
   vertical-align: middle;
+  color: black;
 }
 
 .sidebar {
-  vertical-align: left;
   position: fixed;
-  width: 'calc(20vw - 5px)';
-  height: 'calc(100vh - 10px)';
-  margin-left: '5px'; 
+  width: calc(20vw - 5px);
+  height: calc(100vh - 10px);
+  left: 5px;
+}
+
+.tabArea {
+  position: fixed;
+  left: calc(20vw + 5px);
+  top: 5px;
 }
