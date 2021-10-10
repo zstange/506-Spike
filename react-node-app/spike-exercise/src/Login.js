@@ -1,4 +1,5 @@
 import React, {useState} from "react"; 
+import Axios from 'axios';
 import Button from "react-bootstrap/Button";
 import FormControl from "react-bootstrap/FormControl"
 import {Route, withRouter} from 'react-router-dom'
@@ -33,15 +34,22 @@ class Login extends React.Component {
 
   /* TODO -- Handles the redirect to the account page */
   handleLogin(event) { /* Check if either email or password boxes are blank */
-    if (this.state.email.trim().length == 0 || this.state.password.trim().length == 0) { 
-      alert("Please fill out both an email and password.");
-    }
-    else if (1 == 1) { /* TODO -- Check if email and password are valid*/ 
-      this.props.history.push("RenterHome");
-    }  
-    else { 
-      alert("Invalid email and/or password. Please try again.")
-    }
+
+    Axios.post("http://localhost:3001/login",{
+    username: this.state.email.trim(),
+    password: this.state.password.trim()
+    }).then((response) => {
+      if (this.state.email.trim().length == 0 || this.state.password.trim().length == 0) { 
+        alert("Please fill out both an email and password.");
+        return;
+      }
+      if(response.data.message){
+        alert("Wrong username/password combination!");
+      }
+        else{
+          this.props.history.push('/RenterHome');
+        }
+    })
   }
 
   render() {

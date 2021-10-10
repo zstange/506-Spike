@@ -1,12 +1,13 @@
 import React, {useState} from "react"; 
+import Axios from 'axios';
 import Button from "react-bootstrap/Button";
 import FormControl from "react-bootstrap/FormControl"
 import {withRouter} from 'react-router-dom'
 
 class CreateAccount extends React.Component {
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {value: '', email: "", password: ""};  /* state array */
   }
 
@@ -22,15 +23,19 @@ class CreateAccount extends React.Component {
 
   /* TODO -- Handles account registration */
   handleRegister(event) { /* Check if either email or password boxes are blank */
-    if (this.state.email.trim().length == 0 || this.state.password.trim().length == 0) { 
-      alert("Please fill out both an email and password.");
-    }
-    else if (1 == 1) { /* TODO -- Check if email is already being used*/ 
-      alert("Insert check for if email is already being used here.")
-    }  
-    else { 
-      alert("An account already exists for this email.")
-    }
+
+    Axios.post("http://localhost:3001/CreateAccount",{
+    username: this.state.email.trim(),
+    password: this.state.password.trim()
+    }).then((response) => {
+      if (this.state.email.trim().length == 0 || this.state.password.trim().length == 0) { 
+        alert("Please fill out both an email and password.");
+      }
+      else{
+        this.props.history.push('/Login');
+      }
+    });
+    
   }
 
   render() {
