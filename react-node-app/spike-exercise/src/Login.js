@@ -33,16 +33,18 @@ class Login extends React.Component {
   }
 
   /* TODO -- Handles the redirect to the account page */
-  handleLogin(event) { /* Check if either email or password boxes are blank */
+  handleLogin(event) { /* Check if either email or password boxes are blank */4
+    let username = this.state.email.trim();
+    let password = this.state.password.trim()
+
+    if (username.length == 0 || password.length == 0) { 
+      alert("Please fill out both an email and password.");
+      return;
+    }
 
     Axios.post("http://localhost:3001/login",{
-    username: this.state.email.trim(),
-    password: this.state.password.trim()
+    username, password
     }).then((response) => {
-      if (this.state.email.trim().length == 0 || this.state.password.trim().length == 0) { 
-        alert("Please fill out both an email and password.");
-        return;
-      }
       if(response.data.message){
         alert("Wrong username/password combination!");
       }
