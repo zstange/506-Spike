@@ -117,29 +117,6 @@ class Login extends React.Component {
     this.props.history.push("AdminRequests");
   }
 
-  /* TODO -- Handles the redirect to the account page */
-  handleLogin(event) { /* Check if either email or password boxes are blank */
-    let username = this.state.email.trim();
-    let password = this.state.password.trim();
-
-    if (this.state.email.trim().length == 0 || this.state.password.trim().length == 0) { 
-        alert("Please fill out both an email and password.");
-        return;
-      }
-
-    Axios.post("http://localhost:3001/login",{
-    username: this.state.email.trim(),
-    password: this.state.password.trim()
-    }).then((response) => {
-      if(response.data.message){
-        alert("Wrong username/password combination!");
-      }
-        else{
-          this.props.history.push('/RenterHome');
-        }
-    })
-  }
-
   render() {
     return (
       <>
@@ -147,11 +124,7 @@ class Login extends React.Component {
         <img src="MadRentals_Logo_Light.png" height="auto" width="auto"></img>
 
         <LoginPage />
-
-        {/* <FormControl placeholder = "Email" value={this.state.email} onChange={this.handleChange.bind(this, "email")} /> */}
-        {/* <FormControl placeholder = "Password" value={this.state.password}  onChange={this.handleChange.bind(this, "password")} /> */}
         <div>          
-          {/* <Button className="my-2" onClick = {() => this.handleLogin()}>Login</Button>&nbsp;&nbsp; */}
           <Button className="my-2 "onClick = {() => this.handleCreateAccount()}>Create Account</Button>
           <br />
           <Button onClick = {() => this.handleRentalApplicationTEST()}>RenterApplicationTEST</Button>&nbsp;
