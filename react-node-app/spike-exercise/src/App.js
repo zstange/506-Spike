@@ -5,6 +5,8 @@ import RenterHome from './RenterHome';
 import CreateAccount from './CreateAccount';
 import RenterApplication from './RenterApplication'
 import RenterPayment from './RenterPayment'
+import RenterRequests from './RenterRequests'
+import AdminRequests from './AdminRequests'
 import { BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 
 function App() {
@@ -50,6 +52,16 @@ function App() {
           <Route exact path = "/RenterPayment" 
           render={() => (
             <RenterPayment data={data} />
+          )}
+          />
+          <Route path = "/RenterRequests" 
+          render={() => (
+            <RenterRequests data={data} />
+          )}
+          />
+          <Route path = "/AdminRequests" 
+          render={() => (
+            <AdminRequests data={data} />
           )}
           />
         </Switch> 

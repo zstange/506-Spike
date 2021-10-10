@@ -31,6 +31,14 @@ class Login extends React.Component {
     this.props.history.push("RenterPayment");
   }
 
+  handleRenterRequestsTEST(event) {
+    this.props.history.push("RenterRequests");
+  }
+
+  handleAdminRequestsTEST(event) {
+    this.props.history.push("AdminRequests");
+  }
+
   /* TODO -- Handles the redirect to the account page */
   handleLogin(event) { /* Check if either email or password boxes are blank */
     if (this.state.email.trim().length == 0 || this.state.password.trim().length == 0) { 
@@ -55,6 +63,8 @@ class Login extends React.Component {
           <Button onClick = {() => this.handleLogin()}>Login</Button>
           <Button onClick = {() => this.handleRentalApplicationTEST()}>RenterApplicationTEST</Button>
           <Button onClick = {() => this.handleRenterPaymentTEST()}>RenterPaymetTEST</Button>
+          <Button onClick = {() => this.handleRenterRequestsTEST()}>RenterRequestsTEST</Button>
+          <Button onClick = {() => this.handleAdminRequestsTEST()}>AdminRequestsTEST</Button>
         </div>   
       </>
     );
