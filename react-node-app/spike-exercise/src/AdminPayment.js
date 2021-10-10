@@ -46,7 +46,7 @@ function AdminPay() {
               newList[event.target.id].Rent+=(Number(renterList[event.target.id].NewRent)+Number(renterList[event.target.id].ExtraCharges));
               setRenterList(newList);
               event.preventDefault();
-              alert("insert payment being sent to database here")
+              alert("insert updated rent being sent to database here")
               setValidRenter({...validRenter, [event.target.id]: false})
         }
         
@@ -127,7 +127,7 @@ function AdminPay() {
                     required
                     placeholder="$000.00"
                     />
-                    <Form.Control.Feedback type="invalid">Must be proper dollar amount greater than 0.</Form.Control.Feedback>
+                    <Form.Control.Feedback type="invalid">Must be proper dollar amount.</Form.Control.Feedback>
                 </Col>                   
             </Form.Group>        
             <Button onClick = {handleSubmit} id = {renter.renterNumber} className="m-4" type="submit" size="lg" style={{display: 'inline-block'}}>Save New Charges</Button>
