@@ -1,9 +1,11 @@
 import React, {useState} from "react"; 
-import { TextArea, Form, Button, Row, Col, InputGroup, FormControl, Dropdown, DropdownButton} from "react-bootstrap";
+import { TextArea, Form, Button, Row, Col, Container, InputGroup, FormControl, Dropdown, DropdownButton} from "react-bootstrap";
 import './App.css';
 
 function AdminRequest() {
     // FOR THE SAKE OF EXAMPLE UNTIL THE DATABASE CAN GIVE US A LIST OF REQUESTS HERE IS A DUMMY LIST
+    // Essentially how it works is that a list of concatenated user request arrays are given to the admin page to use and modify, but not delete
+    // note one part is that the "problemNumber" fields within each array entry must be updated accordingly as one renter can send multiple requests.
     const startingList = [{firstName: "Al", lastName: "Bundy", phoneNumber: "651-214-4155", email: "email", aptOption: "Apartment 1", bedOption: "2 Beds", 
         roomNumber: "69420", problem: "I hate my wife.", priority: "Medium", response: "", problemNumber: "0"},
     {firstName: "Walter", lastName: "White", phoneNumber: "234", email: "email2", aptOption: "Apartment 1", bedOption: "1 Bed", roomNumber: "515", problem: "Gus Fring", 
@@ -156,13 +158,11 @@ class AdminRequests extends React.Component {
   render() {
     return (
         <>
-            <img src="MadRentals_Logo_Light.png" height="auto" width="auto"></img>
-            
-            <div>
-                <Row className="mx-3">
+            <Container fluid style={{ width: 'calc(80vw - 10px)', height: 'calc(100vh - 10px)', marginTop: '40px', background: 'white', overflowY: 'scroll'}}>
+                <Row>
                     <AdminRequest/>
                 </Row>
-            </div>
+            </Container>
         </>
     );
   }

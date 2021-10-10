@@ -117,20 +117,13 @@ class Login extends React.Component {
     this.props.history.push("AdminRequests");
   }
 
+
   render() {
     return (
       <>
       
         <img src="MadRentals_Logo_Light.png" height="auto" width="auto"></img>
 
-        <LoginPage />
-        <div>          
-          <Button className="my-2 "onClick = {() => this.handleCreateAccount()}>Create Account</Button>
-          <br />
-          <Button onClick = {() => this.handleRentalApplicationTEST()}>RenterApplicationTEST</Button>&nbsp;
-          <Button onClick = {() => this.handleRenterPaymentTEST()}>RenterPaymetTEST</Button>&nbsp;
-          <Button onClick = {() => this.handleRenterRequestsTEST()}>RenterRequestsTEST</Button>&nbsp;
-          <Button onClick = {() => this.handleAdminRequestsTEST()}>AdminRequestsTEST</Button>&nbsp;
         </div>   
       </>
     );

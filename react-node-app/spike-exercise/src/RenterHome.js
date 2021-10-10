@@ -5,6 +5,8 @@ import PropertiesArea from "./PropertiesArea";
 import MyUserAccount from "./MyUserAccount"
 import { Tab, Tabs } from "react-bootstrap";
 import RenterApplication from "./RenterApplication";
+import RenterPayment from "./RenterPayment";
+import RenterRequests from "./RenterRequests";
 
 class RenterHome extends React.Component {
 
@@ -44,6 +46,20 @@ class RenterHome extends React.Component {
             >
               <div>
                   <RenterApplication/>
+              </div>
+            </Tab>
+            <Tab
+              eventKey="payments" title="Make Payment"
+            >
+              <div>
+                  <RenterPayment/>
+              </div>
+            </Tab>
+            <Tab
+              eventKey="requests" title="Maintenance Request"
+            >
+              <div>
+                  <RenterRequests/>
               </div>
             </Tab>
               

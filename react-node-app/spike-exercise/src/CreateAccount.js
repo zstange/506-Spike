@@ -49,56 +49,6 @@ function CreateAccountForm() {
       setValidated(true);
   }
 
-  return (
-      <>
-          <Row>
-          <div>
-              <h1 className="createAccountHeaders">Create Account</h1>
-          </div>
-          </Row>
-          
-          <Row style={{padding: '5%'}}>
-          <div >            
-              <Form noValidate validated={validated} action="RenterHome" onSubmit={handleSubmit} onCancel={handleCancel}>
-                  <h4 className="createAccountLabels mb-3">Personal Information:</h4>
-                  <Form.Group as={Row} className="mb-3" controlId="validationFirstName">
-                      <Form.Label column sm="3" className="createAccountLabels">First Name</Form.Label>
-                      <Col sm="9" >
-                          <Form.Control 
-                          required
-                          type="text"
-                          name="firstName"
-                          placeholder="First name"
-                          />
-                      </Col>                    
-                  </Form.Group>
-
-                  <Form.Group as={Row} className="mb-3" controlId="validationLastName">
-                      <Form.Label column sm="3" className="createAccountLabels">Last Name</Form.Label>
-                      <Col sm="9">
-                          <Form.Control
-                          required
-                          type="text"
-                          name="lastName"
-                          placeholder="Last name"
-                          />
-                      </Col>                    
-                  </Form.Group>
-
-                  <Form.Group as={Row} className="mb-3" controlId="formBasicEmail">
-                      <Form.Label column sm="3" className="createAccountLabels">Email Address</Form.Label>
-                      <Col sm="9">
-                          <Form.Control type="email" name="email" placeholder="Enter email" required />
-                      </Col>
-                  </Form.Group>
-
-                  <Form.Group as={Row} className="mb-3" controlId="formBasicPassword">
-                      <Form.Label column sm="3" className="createAccountLabels">Create Password</Form.Label>
-                      <Col sm="9">
-                          <Form.Control type="password" name="password" placeholder="Enter password" required />
-                      </Col>
-                  </Form.Group>
-
                   <Form.Group as={Row} className="mb-3" controlId="validationPhoneNumber">
                       <Form.Label column sm="3" className="createAccountLabels">Phone Number</Form.Label>
                       <Col sm="9">

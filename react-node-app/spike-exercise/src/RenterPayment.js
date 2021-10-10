@@ -1,5 +1,5 @@
 import React, {useState} from "react"; 
-import { Form, Button, Row, Col, InputGroup, FormControl, Dropdown, DropdownButton} from "react-bootstrap";
+import { Form, Button, Row, Col, Container, InputGroup, FormControl, Dropdown, DropdownButton} from "react-bootstrap";
 import './App.css';
 
 function Payment() {
@@ -165,13 +165,11 @@ class RenterPayment extends React.Component {
   render() {
     return (
         <>
-            <img src="MadRentals_Logo_Light.png" height="auto" width="auto"></img>
-            
-            <div>
-                <Row className="mx-3">
-                    <Payment />
+            <Container fluid style={{ width: 'calc(80vw - 10px)', height: 'calc(100vh - 10px)', marginTop: '40px', background: 'white', overflowY: 'scroll'}}>
+                <Row>
+                    <Payment/>
                 </Row>
-            </div>
+            </Container>
         </>
     );
   }
