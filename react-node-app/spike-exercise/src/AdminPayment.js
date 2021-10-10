@@ -12,6 +12,7 @@ function AdminPay() {
 
     const [renterList, setRenterList] = useState(startingList);
     const [validRenter, setValidRenter] = useState({0: false, 1: false})
+    const [renter, setRenter] = useState(renterList[0])
     
     const handleChange = (event) => {
         let newList = renterList;
@@ -46,18 +47,50 @@ function AdminPay() {
               newList[event.target.id].Rent+=(Number(renterList[event.target.id].NewRent)+Number(renterList[event.target.id].ExtraCharges));
               setRenterList(newList);
               event.preventDefault();
-              alert("insert updated rent being sent to database here")
-              setValidRenter({...validRenter, [event.target.id]: false})
+              alert("insert updated rent being sent to database here")        
         }
         
         console.log(renterList);
     }
 
+    const handleRenter = (event) => {
+        setRenter(renterList[event.target.value])
+    }
 
-    const GenerateList = 
-            renterList.map((renter) =>
+    
+    
+    function ShowList() {
+        const GenerateList = renterList.map((renter) => 
+        <option value={renter.renterNumber}>{renter.firstName + " " + renter.lastName}</option>
+    );
+        return GenerateList
+    }
+    
+    return (
+        <>
+            <Row>
+            <div>
+                <h1 className="rentalFormHeaders">Admin Payment</h1>
+            </div>
+            
+            </Row>
+            <Row style={{padding: '5%'}}>
+
+            <div className="mb-3">
+            <h4 className="rentalFormLabels mt-4 mb-3">Select Renter:</h4>
+                <Form.Group as={Row} controlId="AccountType" onChange = {handleRenter}>
+                    <Form.Label column sm="3" className="rentalFormLabels">Renter:</Form.Label>
+                        <Col sm="9">
+                        <Form.Select id="AccountType" value = {renter.renterNumber} aria-label="Default select example" className="mb-3" name="aptOption" required>
+                            <ShowList />
+                        </Form.Select>
+                        <Form.Control.Feedback type="invalid">Select account type.</Form.Control.Feedback>
+                        </Col>
+                </Form.Group>                            
+            </div>
+
             <div ><h4 className="rentalFormLabels mb-3">Renter Information:</h4>
-            <Form noValidate validated = {validRenter[renter.renterNumber]} onChange = {handleChange} >
+            <Form id = {renter.renterNumber} action = "AdminPayment" noValidate validated = {validRenter[renter.renterNumber]} onSubmit = {handleSubmit} onChange = {handleChange}>
             <Form.Group as={Row} className="mb-3" controlId="validationName">
                 <Form.Label column sm="3" className="rentalFormLabels">Name:</Form.Label>
                 <Col sm="9" >
@@ -129,27 +162,10 @@ function AdminPay() {
                     />
                     <Form.Control.Feedback type="invalid">Must be proper dollar amount.</Form.Control.Feedback>
                 </Col>                   
-            </Form.Group>        
-            <Button onClick = {handleSubmit} id = {renter.renterNumber} className="m-4" type="submit" size="lg" style={{display: 'inline-block'}}>Save New Charges</Button>
-        </Form>
-        </div>
-    );
-       
-    function ShowList() {
-        return GenerateList;
-    }
-  
-    return (
-        <>
-            <Row>
-            <div>
-                <h1 className="rentalFormHeaders">Admin Payment</h1>
-            </div>
-            </Row>
-            <Row style={{padding: '5%'}}>
-                <Form>
-                    <ShowList />
+            </Form.Group>       
+            <Button className="m-4" type="submit" size="lg" style={{display: 'inline-block'}}>Submit</Button>          
                 </Form>
+        </div>
             <div >             
 
                 <div >
