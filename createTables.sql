@@ -12,6 +12,9 @@ CREATE TABLE `spikedb`.`dbuser` (
   `zipcode` VARCHAR(45) NULL, #DOES this need to be integer?
   `role` VARCHAR(45) NULL,
   `balance` FLOAT NULL,
+  `desiredApartment` VARCHAR(45) NULL,
+  `beds` VARCHAR(45) NULL,
+  `applicationStatus` VARCHAR(45) NULL,
   PRIMARY KEY (`uid`));
   
   CREATE TABLE `spikedb`.`properties` (
@@ -19,7 +22,6 @@ CREATE TABLE `spikedb`.`dbuser` (
   `uid` INT NULL,
   `oid` INT NULL,
   `rent` FLOAT NULL,
-  `status` VARCHAR(45) NULL,
   PRIMARY KEY (`pid`),
   FOREIGN KEY (`uid`) REFERENCES dbuser(`uid`));
   
@@ -30,5 +32,7 @@ CREATE TABLE `spikedb`.`maintenencerequests` (
   `submissionDate` VARCHAR(45) NULL,
   PRIMARY KEY (`rid`),
   FOREIGN KEY (`uid`) REFERENCES dbuser(`uid`));
-
+  
 INSERT INTO `spikedb`.`dbuser` (firstName, lastName, email, password, role) VALUES ('John','admin','admin@gmail.com', 'password', 'admin');
+INSERT INTO `spikedb`.`dbuser` (email, password) VALUES ('test@gmail.com', 'password');
+
