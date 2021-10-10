@@ -71,10 +71,6 @@ class Login extends React.Component {
         <div>
           <Button onClick = {() => this.handleCreateAccount()}>Create Account</Button>
           <Button onClick = {() => this.handleLogin()}>Login</Button>
-          <Button onClick = {() => this.handleRentalApplicationTEST()}>RenterApplicationTEST</Button>
-          <Button onClick = {() => this.handleRenterPaymentTEST()}>RenterPaymetTEST</Button>
-          <Button onClick = {() => this.handleRenterRequestsTEST()}>RenterRequestsTEST</Button>
-          <Button onClick = {() => this.handleAdminRequestsTEST()}>AdminRequestsTEST</Button>
         </div>   
       </>
     );
