@@ -23,17 +23,18 @@ class CreateAccount extends React.Component {
 
   /* TODO -- Handles account registration */
   handleRegister(event) { /* Check if either email or password boxes are blank */
+    let username = this.state.email.trim();
+    let password = this.state.password.trim();
+
+    if (username == "" || password == "") { 
+        alert("Please fill out both an email and password.");
+        return;
+    }
 
     Axios.post("http://localhost:3001/CreateAccount",{
-    username: this.state.email.trim(),
-    password: this.state.password.trim()
+    username,password
     }).then((response) => {
-      if (this.state.email.trim().length == 0 || this.state.password.trim().length == 0) { 
-        alert("Please fill out both an email and password.");
-      }
-      else{
         this.props.history.push('/Login');
-      }
     });
     
   }
