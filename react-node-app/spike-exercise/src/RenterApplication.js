@@ -1,5 +1,5 @@
 import React, {useState} from "react"; 
-import { Form, Button, Row, Col, InputGroup, FormControl, Dropdown, DropdownButton} from "react-bootstrap";
+import { Form, Button, Row, Col, Container, InputGroup, FormControl, Dropdown, DropdownButton} from "react-bootstrap";
 import './App.css';
 
 function RentalForm() {
@@ -163,7 +163,7 @@ function RentalForm() {
                         <Form.Group as={Row} className="mb-4">
                         <Form.Label column sm={3}></Form.Label>
                             <Col sm={9}>
-                                <Form.Check style={{textAlign: 'left'}}
+                                <Form.Check style={{textAlign: 'left', color: 'black'}}
                                     required
                                     label="Agree to terms and conditions"
                                     feedback="You must agree before submitting."
@@ -190,13 +190,11 @@ class RenterApplication extends React.Component {
   render() {
     return (
         <>
-            <img src="MadRentals_Logo_Light.png" height="auto" width="auto"></img>
-            
-            <div>
-                <Row className="mx-3">
+            <Container fluid style={{ width: 'calc(80vw - 10px)', height: 'calc(100vh - 10px)', marginTop: '40px', background: 'white', overflowY: 'scroll'}}>
+                <Row>
                     <RentalForm/>
                 </Row>
-            </div>
+            </Container>
         </>
     );
   }
