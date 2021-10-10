@@ -31,13 +31,13 @@ app.post("/CreateAccount", (req, res) => {
   });
 });
 
-app.post("/login", (req, res) => {
-  const username = req.body.username
+app.post("/Login", (req, res) => {
+  const email = req.body.email
   const password = req.body.password
 
   const sqlInsert = 
   "SELECT * FROM dbuser WHERE email = ? AND password = ?"
-  db.query(sqlInsert, [username, password], (err, result) => {
+  db.query(sqlInsert, [email, password], (err, result) => {
     if(err){
       res.send({err: err});
     }
