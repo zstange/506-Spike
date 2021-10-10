@@ -30,3 +30,5 @@ CREATE TABLE `spikedb`.`maintenencerequests` (
   `submissionDate` VARCHAR(45) NULL,
   PRIMARY KEY (`rid`),
   FOREIGN KEY (`uid`) REFERENCES dbuser(`uid`));
+
+INSERT INTO `spikedb`.`dbuser` (firstName, lastName, email, password, role) VALUES ('John','admin','admin@gmail.com', 'password', 'admin');

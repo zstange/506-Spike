@@ -12,8 +12,8 @@ import { BrowserRouter as Router, Route, Switch, useHistory} from 'react-router-
 
 
 function App() {
-  const [data, setData] = React.useState(null);
-  let history = useHistory();
+  // const [data, setData] = React.useState(null);
+  const history = useHistory();
 
   // React.useEffect(() => {
   //   fetch("/")
@@ -39,7 +39,7 @@ function App() {
           />
           <Route exact path = "/RenterHome" 
            render={() => (
-            <RenterHome  />
+            <RenterHome history={history} />
           )}
           />
           <Route exact path = "/CreateAccount" 
