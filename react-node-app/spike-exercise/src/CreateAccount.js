@@ -174,43 +174,13 @@ function CreateAccountForm() {
               <div >
                   <a href="/Login" id="cancel" name="cancel" className="btn btn-danger btn-lg" style={{display: 'inline-block'}}>Cancel</a>
               </div>         
-          </div>
-     
+          </div>     
           </Row> 
       </>
   );
 }
 
-
-
 class CreateAccount extends React.Component {
-
-  // constructor(props) {
-  //   super(props);
-  //   this.state = {value: '', email: "", password: ""};  /* state array */
-  // }
-
-  // /* Handles changes to a account box by updating the appropriate state in this.state */
-  // handleChange(name, event) {
-  //   this.setState({[name]: event.target.value});
-  // }
-
-  // /* Handles the redirect to the login page */
-  // handleCancel(event) {
-  //   this.props.history.go(-1);
-  // }
-
-  // /* TODO -- Handles account registration */
-
-    
-  // }
-
-  // handleAccountCreation() {
-
-  // }
-  
-
-
   render() {
     return (
       <>
