@@ -6,88 +6,98 @@ import {Route, withRouter} from 'react-router-dom'
 import './App.css';
 
 
-function LoginPage() {
-  const [validated, setValidated] = useState(false);
-
-  const handleSubmit = (event) => {
-    const form = event.currentTarget;
-    if (form.checkValidity() === false) {
-      event.preventDefault();
-      event.stopPropagation();
-    }
-    
-    setValidated(true);
-      
-    // Output Caputured Data
-    if (form.checkValidity() === true) {
-      console.log(event.target.elements.firstName.value)
-      console.log(event.target.elements.lastName.value)
-      console.log(event.target.elements.password.value)
-      console.log(event.target.elements.phoneNumber.value)
-      console.log(event.target.elements.email.value)
-      console.log(event.target.elements.address1.value)
-      console.log(event.target.elements.address2.value)
-      console.log(event.target.elements.city.value)
-      console.log(event.target.elements.state1.value)
-      console.log(event.target.elements.zipcode.value)
-
-      Axios.post("http://localhost:3001/CreateAccount",{
-        email: this.state.email.trim(),
-        password: this.state.password.trim(),
-        }).then((response) => {
-            this.props.history.push('/Login');
-        });
-      }          
-    };   
-
-  const handleCancel = (event) => {
-      setValidated(true);
-  }
-
-  return (
-      <>          
-          <Row style={{padding: '2%'}}>
-          <div >            
-              <Form noValidate validated={validated} action="RenterHome" onSubmit={handleSubmit} onCancel={handleCancel}>
-                  <Form.Group as={Row} className="mb-3" controlId="validationEmail">
-                      <Form.Label column sm="3" className="createAccountLabels">Email</Form.Label>
-                      <Col sm="9" >
-                          <Form.Control 
-                          required
-                          type="email"
-                          name="email"
-                          placeholder="Email address"
-                          />
-                      </Col>                    
-                  </Form.Group>
-
-                  <Form.Group as={Row} className="mb-1" controlId="validationPassword">
-                      <Form.Label column sm="3" className="createAccountLabels">Password</Form.Label>
-                      <Col sm="9">
-                          <Form.Control
-                          required
-                          type="password"
-                          name="password"
-                          placeholder="Password"
-                          />
-                      </Col>                    
-                  </Form.Group>
-
-                  <Button className="m-4" type="submit" style={{display: 'inline-block'}}>Submit</Button>          
-              </Form>        
-          </div>
-     
-          </Row> 
-      </>
-  );
-}
 
 class Login extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {value: '', email: "", password: ""};  /* state array */
+    this.validated = false;
+    this.setValidated = false;
   }
+
+  LoginPage() {
+    // const [validated, setValidated] = React.useState(false);
+  
+    const handleSubmit = (event) => {
+      const form = event.currentTarget;
+      if (form.checkValidity() === false) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+      
+      this.setValidated = true;
+      
+      
+        
+      // Output Caputured Data
+      if (form.checkValidity() === true) {
+        console.log(event.target.elements.password.value)
+        console.log(event.target.elements.email.value)
+  
+        Axios.post("http://localhost:3001/Login",{
+          email: event.target.elements.email.value,
+          password: event.target.elements.password.value,
+          }).then((response) => {
+            if(response.data.message){
+              alert("Wrong username/password combination!");
+            }
+              else{
+                console.log("Im here")
+                console.log("Im here")
+                console.log("Im here")
+                console.log(this.props.history)
+                this.props.history.push('/CreateAccount');
+                event.preventDefault();
+              }
+              
+          });
+        }          
+      };   
+  
+    const handleCancel = (event) => {
+        this.setValidated= true;
+    }
+  
+    return (
+        <>          
+            <Row style={{padding: '2%'}}>
+            <div >            
+                <Form noValidate validated={this.validated} onSubmit={handleSubmit} onCancel={handleCancel}>
+                    <Form.Group as={Row} className="mb-3" controlId="validationEmail">
+                        <Form.Label column sm="3" className="createAccountLabels">Email</Form.Label>
+                        <Col sm="9" >
+                            <Form.Control 
+                            required
+                            type="email"
+                            name="email"
+                            placeholder="Email address"
+                            />
+                        </Col>                    
+                    </Form.Group>
+  
+                    <Form.Group as={Row} className="mb-1" controlId="validationPassword">
+                        <Form.Label column sm="3" className="createAccountLabels">Password</Form.Label>
+                        <Col sm="9">
+                            <Form.Control
+                            required
+                            type="password"
+                            name="password"
+                            placeholder="Password"
+                            />
+                        </Col>                    
+                    </Form.Group>
+  
+                    <Button className="m-4" type="submit" style={{display: 'inline-block'}}>Submit</Button>          
+                </Form>        
+            </div>
+       
+            </Row> 
+        </>
+    );
+  }
+  
+
 
   /* Handles changes to a login box by updating the appropriate state in this.state */
   handleChange(name, event) {
@@ -123,7 +133,7 @@ class Login extends React.Component {
       
         <img src="MadRentals_Logo_Light.png" height="auto" width="auto"></img>
 
-        <LoginPage />
+        {this.LoginPage()}
         <div> 
           <div>
                 <p className="loginText">Don't have an account yet?</p>
