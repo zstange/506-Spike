@@ -12,7 +12,7 @@ class RenterHome extends React.Component {
     return (
       <>
         <div className="sidebar">
-          <SideBar />
+          <SideBar admin={true}/>
         </div>
         <div className="tabArea">
           <Tabs
