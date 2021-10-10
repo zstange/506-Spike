@@ -10,8 +10,8 @@ class SideBar extends React.Component {
       <>
         <Card style={{ width: 'calc(20vw - 5px)', marginLeft: '5px', height: 'calc(100vh - 10px)', background: '#376daf'}}>
           <Card.Body>
-            <img src="MadRentals_Logo_Light.png" height="auto" width="350px"></img>
-            <Card.Title style={{color: "#000"}}>Renter Homepage</Card.Title>
+            <img src="MadRentals_Logo_Light.png" height="150px" width="auto"></img>
+            <Card.Title style={{color: "#000"}}>{this.props.admin ? "Admin Homepage" : "Renter Homepage"}</Card.Title>
             <Form>
             </Form>
           </Card.Body>

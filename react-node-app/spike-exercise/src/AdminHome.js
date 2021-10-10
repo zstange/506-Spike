@@ -12,7 +12,7 @@ class RenterHome extends React.Component {
     return (
       <>
         <div className="sidebar">
-          <SideBar admin={false}/>
+          <SideBar admin={true}/>
         </div>
         <div className="tabArea">
           <Tabs
@@ -31,22 +31,6 @@ class RenterHome extends React.Component {
                   <MyUserAccount/>
               </div>
             </Tab>
-            <Tab
-              eventKey="search" title="Search"
-            >
-              <div>
-                  <PropertiesArea/>
-              </div>
-            </Tab>
-
-            <Tab
-              eventKey="apply" title="Apply Here!"
-            >
-              <div>
-                  <RenterApplication/>
-              </div>
-            </Tab>
-              
           </Tabs>
         </div>
         
