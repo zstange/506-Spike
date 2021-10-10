@@ -2,12 +2,20 @@ import React, {useState} from "react";
 import Axios from 'axios';
 import FormControl from "react-bootstrap/FormControl"
 import { Form, Button, Row, Col} from "react-bootstrap";
-import {Route, withRouter} from 'react-router-dom'
+import {Route, withRouter, useHistory} from 'react-router-dom'
 import './App.css';
 
 
 function LoginPage() {
   const [validated, setValidated] = useState(false);
+  const [contents, setContents] = useState({Email: "", Password: ""})
+
+  const history = useHistory();
+
+  const handleChange = (event) => {
+    console.log(event.target.id)
+    setContents({...contents, [event.target.id]: event.target.value.trim()})
+  }
 
   const handleSubmit = (event) => {
     const form = event.currentTarget;
@@ -20,24 +28,17 @@ function LoginPage() {
       
     // Output Caputured Data
     if (form.checkValidity() === true) {
-      console.log(event.target.elements.firstName.value)
-      console.log(event.target.elements.lastName.value)
-      console.log(event.target.elements.password.value)
-      console.log(event.target.elements.phoneNumber.value)
-      console.log(event.target.elements.email.value)
-      console.log(event.target.elements.address1.value)
-      console.log(event.target.elements.address2.value)
-      console.log(event.target.elements.city.value)
-      console.log(event.target.elements.state1.value)
-      console.log(event.target.elements.zipcode.value)
+      event.preventDefault();
+  
+      
+      
+      
+      
+      console.log("apple");
+      history.push('/RenterHome');
+      
 
-      Axios.post("http://localhost:3001/CreateAccount",{
-        email: this.state.email.trim(),
-        password: this.state.password.trim(),
-        }).then((response) => {
-            this.props.history.push('/Login');
-        });
-      }          
+    }
     };   
 
   const handleCancel = (event) => {
@@ -48,8 +49,8 @@ function LoginPage() {
       <>          
           <Row style={{padding: '2%'}}>
           <div >            
-              <Form noValidate validated={validated} action="RenterHome" onSubmit={handleSubmit} onCancel={handleCancel}>
-                  <Form.Group as={Row} className="mb-3" controlId="validationEmail">
+              <Form noValidate validated={validated} onChange = {handleChange} onSubmit={handleSubmit} onCancel={handleCancel}>
+                  <Form.Group as={Row} className="mb-3" controlId="Email">
                       <Form.Label column sm="3" className="createAccountLabels">Email</Form.Label>
                       <Col sm="9" >
                           <Form.Control 
@@ -61,7 +62,7 @@ function LoginPage() {
                       </Col>                    
                   </Form.Group>
 
-                  <Form.Group as={Row} className="mb-1" controlId="validationPassword">
+                  <Form.Group as={Row} className="mb-1" controlId="Password">
                       <Form.Label column sm="3" className="createAccountLabels">Password</Form.Label>
                       <Col sm="9">
                           <Form.Control
@@ -91,7 +92,7 @@ class Login extends React.Component {
 
   /* Handles changes to a login box by updating the appropriate state in this.state */
   handleChange(name, event) {
-    this.setState({[name]: event.target.value});
+    
   }
 
   /* Handles the redirect to the create account page */
@@ -134,5 +135,6 @@ class Login extends React.Component {
     );
   }
 }
+
 
 export default withRouter(Login);
