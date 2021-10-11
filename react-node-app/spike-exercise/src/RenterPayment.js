@@ -5,10 +5,12 @@ import './App.css';
 function Payment() {
     const [validated, setValidated] = useState(false)
     const [contents, setContents] = useState({AccountName: "", RoutingNumber: "", ConfirmRoutingNumber: "",
-      AccountNumber: "", ConfirmAccountNumber: "", AccountType: "", PaymentAmount: ""});
+      AccountNumber: "", ConfirmAccountNumber: "", AccountType: "", PaymentAmount: 0});
+    const [BalanceDue, setBalance] = useState(100.00); // dummy until database entry
 
     const handleSubmit = (event) => {
-      const form = event.currentTarget;
+    const form = event.currentTarget;
+    console.log(contents);
      
       if (form.checkValidity() === false) {
         event.preventDefault();
@@ -18,6 +20,8 @@ function Payment() {
       setValidated(true);
 
       if (form.checkValidity() === true) {
+          let newBalance = BalanceDue-contents.PaymentAmount;
+          setBalance(newBalance);
           event.preventDefault();
           alert("insert payment being sent to database here")
         }
@@ -27,7 +31,7 @@ function Payment() {
       setValidated(true);
     }
 
-    const handleChange = (event) => {     
+    const handleChange = (event) => {  
       setContents({...contents, [event.target.id]: event.target.value.trim()})
     }
   
@@ -41,6 +45,16 @@ function Payment() {
             
             <Row style={{padding: '5%'}}>
             <div >            
+                <h4 className="rentalFormLabels mb-3">Balance Due</h4>
+                    <Form.Group as={Row} className="mb-3" value = {contents.AccountName} onChange = {handleChange} >
+                        <Form.Label column sm="3" className="rentalFormLabels">Balance Due</Form.Label>
+                        <Col sm="9" >
+                            <Form.Control 
+                            readOnly
+                            value = {"$"+BalanceDue}
+                            />
+                        </Col>                    
+                </Form.Group>
                 <Form noValidate validated = {validated} onSubmit = {handleSubmit} action="RenterPayment" onCancel={handleCancel}>
                     <h4 className="rentalFormLabels mb-3">Payment Info</h4>
                     <Form.Group as={Row} className="mb-3" value = {contents.AccountName} onChange = {handleChange} >
@@ -137,17 +151,16 @@ function Payment() {
                         <Form.Label column sm="3" className="rentalFormLabels">Payment Amount</Form.Label>
                         <Col sm="9" >
                             <Form.Control 
-                            id="Payment Amount"
+                            id="PaymentAmount"
                             pattern = "^\d+.{0,1}\d{0,2}"
                             required
                             type="text"
-                            name="Payment Amount"
+                            name="PaymentAmount"
                             placeholder="$000.00"
                             />
-                            <Form.Control.Feedback type="invalid">Must be proper dollar amount greater than 0.</Form.Control.Feedback>
+                            <Form.Control.Feedback type="invalid">Must be proper dollar amount.</Form.Control.Feedback>
                         </Col>                    
                     </Form.Group>
-
                     <Button className="m-4" type="submit" size="lg" style={{display: 'inline-block'}}>Submit</Button>          
                 </Form>
 
