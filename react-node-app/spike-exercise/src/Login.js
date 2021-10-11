@@ -32,7 +32,8 @@ function LoginPage(props) {
           else if (response.data.message){
             alert(response.data.message);
           } else {
-            window.location = "/RenterHome";
+            props.setID(response.data.userID);
+            window.location = `/RenterHome?id=${response.data.userID}`;
           }
         });
       }          
@@ -93,13 +94,17 @@ class Login extends React.Component {
     this.props.history.push("CreateAccount");
   }
 
+  setID(id) {
+    this.props.setID(id);
+  }
+
   render() {
     return (
       <>
       
         <img src="MadRentals_Logo_Light.png" height="auto" width="auto"></img>
 
-        <LoginPage history={this.props.history}/>
+        <LoginPage setID={(id) => this.setID(id)} history={this.props.history}/>
         <div> 
           <div>
                 <p className="loginText">Don't have an account yet?</p>

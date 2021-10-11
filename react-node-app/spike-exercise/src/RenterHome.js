@@ -11,6 +11,12 @@ import {Route, withRouter} from 'react-router-dom'
 
 class RenterHome extends React.Component {
 
+  getUserID() {
+    const search = this.props.location.search; // returns the URL query String
+    const params = new URLSearchParams(search); 
+    return params.get('id'); 
+  }
+
   render() {
     return (
       <>
@@ -31,14 +37,14 @@ class RenterHome extends React.Component {
               eventKey="account" title="My Account"
             >
               <div>
-                  <MyUserAccount/>
+                  <MyUserAccount userID={this.getUserID()}/>
               </div>
             </Tab>
             <Tab
               eventKey="search" title="Search"
             >
               <div>
-                  <PropertiesArea/>
+                  <PropertiesArea userID={this.getUserID()}/>
               </div>
             </Tab>
 
@@ -46,23 +52,23 @@ class RenterHome extends React.Component {
               eventKey="apply" title="Apply Here!"
             >
               <div>
-                  <RenterApplication/>
+                  <RenterApplication userID={this.getUserID()}/>
               </div>
             </Tab>
             <Tab
               eventKey="payments" title="Make Payment"
             >
               <div>
-                  <RenterPayment/>
+                  <RenterPayment userID={this.getUserID()}/>
               </div>
             </Tab>
-            {/* <Tab
+            <Tab
               eventKey="requests" title="Maintenance Request"
             >
               <div>
-                  <RenterRequests/>
+                  <RenterRequests userID={this.getUserID()}/>
               </div>
-            </Tab> */}
+            </Tab>
               
           </Tabs>
         </div>

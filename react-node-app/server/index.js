@@ -53,8 +53,9 @@ app.post("/Login", (req, res) => {
       return res.json({err: err});
     }
     else if (result != ""){
-      var redir = { redirect: "/RenterHome" };
-      return res.json(redir);
+      var user = JSON.parse(JSON.stringify(result));
+      var userID = { userID: user[0].uid };
+      return res.json(userID);
     } else{
         return res.json({message: "Wrong username/password combination!"})
     }
