@@ -6,6 +6,7 @@ import Axios from 'axios';
 function Payment() {
     const [validated, setValidated] = useState(false)
     const [contents, setContents] = useState({AccountName: "", RoutingNumber: "", ConfirmRoutingNumber: "",
+
       AccountNumber: "", ConfirmAccountNumber: "", AccountType: "", PaymentAmount: -1});
       
     const [BalanceDue, setBalance] = useState(10);
@@ -58,6 +59,8 @@ function Payment() {
                 }
             });
             setBalance(newBalance);
+
+
         }
     };   
 
@@ -82,6 +85,16 @@ function Payment() {
             
             <Row style={{padding: '5%'}}>
             <div >            
+                <h4 className="rentalFormLabels mb-3">Balance Due</h4>
+                    <Form.Group as={Row} className="mb-3" value = {contents.AccountName} onChange = {handleChange} >
+                        <Form.Label column sm="3" className="rentalFormLabels">Balance Due</Form.Label>
+                        <Col sm="9" >
+                            <Form.Control 
+                            readOnly
+                            value = {"$"+BalanceDue}
+                            />
+                        </Col>                    
+                </Form.Group>
                 <Form noValidate validated = {validated} onSubmit = {handleSubmit} action="RenterPayment" onCancel={handleCancel}>
                     <h4 className="rentalFormLabels mb-3">Payment Info</h4>
                     <Form.Group as={Row} className="mb-3" value = {contents.AccountName} onChange = {handleChange} >
