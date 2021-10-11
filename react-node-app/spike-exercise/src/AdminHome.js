@@ -6,6 +6,8 @@ import { Tab, Tabs } from "react-bootstrap";
 import AdminRequests from "./AdminRequests";
 import AdminPayment from "./AdminPayment";
 import {Route, withRouter} from 'react-router-dom'
+import AdminRentalApplication from "./AdminRentalApplication";
+import AdminPayment from "./AdminPayment";
 
 class AdminHome extends React.Component {
 
@@ -32,17 +34,10 @@ class AdminHome extends React.Component {
               }} 
           >
             <Tab
-              eventKey="account" title="My Account"
-            >
-              <div>
-                  <MyUserAccount userID={this.getUserID()}/>
-              </div>
-            </Tab>
-            <Tab
               eventKey="applications" title="View Applications"
             >
               <div>
-                  
+                  <AdminRentalApplication userID={this.getUserID()}/>
               </div>
             </Tab>
             <Tab
@@ -50,6 +45,13 @@ class AdminHome extends React.Component {
             >
               <div>
                   <AdminRequests/>
+              </div>
+            </Tab>
+            <Tab
+              eventKey="payments" title="Payments"
+            >
+              <div>
+                  <AdminPayment/>
               </div>
             </Tab>
              <Tab

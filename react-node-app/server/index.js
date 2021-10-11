@@ -181,10 +181,10 @@ app.post("/getAll", (req, res) => {
       return res.json({err: err});
     }
     else if (result != ""){
-      var redir = { redirect: "/RenterHome" };
-      return res.json(redir);
+      var user = JSON.parse(JSON.stringify(result));
+      return res.json(user);
     } else{
-        return res.json({message: "Wrong username/password combination!"})
+        return res.json({message: "Wrong!"})
     }
   });
 })
