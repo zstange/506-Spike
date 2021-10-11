@@ -67,6 +67,11 @@ function App() {
             <AdminRequests  />
           )}
           />
+          <Route path = "/AdminPayment" 
+          render={() => (
+            <AdminRequests  />
+          )}
+          />
         </Switch> 
       </header>
     </div>
