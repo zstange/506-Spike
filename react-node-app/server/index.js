@@ -65,6 +65,31 @@ app.post("/Login", (req, res) => {
 })
 
 app.post("/GetBalance", (req, res) => {
+
+  const uid = req.body.uid
+  console.log(uid)
+  const sqlInsert = 
+  "SELECT balance FROM dbuser WHERE uid = ?"
+  db.query(sqlInsert, [uid], (err, result) => {
+    if(err){
+      return res.json({err: err});
+    }
+    else if (result != ""){
+      console.log("result is:" +result[0].balance);
+      if(result[0].balance)
+          return res.json({value: result[0].balance});
+        else {
+          return res.json({value: 0});
+        }
+    } else{
+        return res.json({message: "Balance fetch failed."})
+    }
+  });
+})
+
+app.post("/RenterPayment", (req, res) => {
+  const payment = req.body.payment;
+  let currentBalance;
   const uid = req.body.uid
   const sqlInsert = 
   "SELECT balance FROM dbuser WHERE uid = ?"
@@ -73,47 +98,29 @@ app.post("/GetBalance", (req, res) => {
       return res.json({err: err});
     }
     else if (result != ""){
-      return res.json({value: result[0].balance});
-    } else{
-        return res.json({message: "Balance fetch failed."})
-    }
-
-    
-  });
-})
-
-app.post("/RenterPayment", (req, res) => {
-  let balance = req.body.balance;
-  let currentBalance = -100;
-  const email = "admin@gmail.com"
-  const sqlInsert = 
-  "SELECT balance FROM dbuser WHERE email = ?"
-  db.query(sqlInsert, [email, balance, currentBalance], (err, result) => {
-    if(err){
-      return res.json({err: err});
-    }
-    else if (result != ""){
        if(result[0].balance)
           currentBalance = result[0].balance;
         else
           currentBalance = 0
-        balance =  Number(currentBalance) - Number(balance);
-          const sqlInsert = 
-          "UPDATE dbuser SET balance = '"+balance+"' WHERE email = "+"'"+email+"'";
-          db.query(sqlInsert, [balance,currentBalance,email], (err, result) => {
-            if(err){
-              return res.json({err: err});
-            }
-            else if (result != ""){
-              res.send({message: "Balance change successful."})
-            }
-            else{
-              res.send({message: "Balance change failed."})
-            }
-          });
-    } else{
+
+        currentBalance =  Number(currentBalance) - Number(payment);
+        const sqlInsert = 
+        "UPDATE dbuser SET balance = '"+currentBalance+"' WHERE uid = ?";
+        db.query(sqlInsert, [uid], (err, result) => {
+          if(err){
+            return res.json({err: err});
+          }
+          else if (result != ""){
+            res.send({message: "Balance change successful."})
+          }
+          else{
+            res.send({message: "Balance change failed."})
+          }
+        });     
+      } 
+      else{
         return res.json({message: "User not found!"})
-    }
+      }
   });
   
 });

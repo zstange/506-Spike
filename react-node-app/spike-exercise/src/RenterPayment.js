@@ -1,4 +1,4 @@
-import React, {useState} from "react"; 
+import React, {useReducer, useState} from "react"; 
 import { Form, Button, Row, Col, Container, InputGroup, FormControl, Dropdown, DropdownButton} from "react-bootstrap";
 import './App.css';
 import Axios from 'axios';
@@ -9,7 +9,7 @@ function Payment(props) {
 
       AccountNumber: "", ConfirmAccountNumber: "", AccountType: "", PaymentAmount: -1});
       
-    const [BalanceDue, setBalance] = useState(10);
+    const [BalanceDue, setBalance] = useState(-100);
     
     function fetchBalance() {
         Axios.post("http://localhost:3001/GetBalance",{
@@ -18,18 +18,18 @@ function Payment(props) {
                 if(response.data.err) {
                     alert(response.data.err);
                 }
-                else if (response.data.value) {
+                else if (response.data.value != null || response.data.value == 0) {
                     console.log("fromfetch"+response.data.value)
                     setBalance(Number(response.data.value))
                 } else {
-                    console.log(response.data)
                     alert("fetch failed")
+                    console.log(response.data)
                 }
-            });
+        });
             
-        }
+    }
         
-        fetchBalance();
+    fetchBalance();
 
     const handleSubmit = (event) => {
     const form = event.currentTarget;
@@ -41,26 +41,27 @@ function Payment(props) {
       
       setValidated(true);
       if (form.checkValidity() === true) {
-
         let newBalance = BalanceDue-contents.PaymentAmount;
 
 
         Axios.post("http://localhost:3001/RenterPayment",{
-            balance: contents.PaymentAmount
+            payment: contents.PaymentAmount,
+            uid: props.userID
             }).then((response) => {
                 if(response.data.err) {
                     alert(response.data.err);
                 }
                 else if (response.data.message) {
                     alert(response.data.message);
+                    window.location = `/RenterHome?id=${props.userID}`; 
                 } else {
-                    alert("Payment accepted.")
+                    alert("Payment failed.")
+                    
                     
                 }
-            });
-            setBalance(newBalance);
-
-
+        });
+            
+        
         }
     };   
 
@@ -95,7 +96,7 @@ function Payment(props) {
                             />
                         </Col>                    
                 </Form.Group>
-                <Form noValidate validated = {validated} onSubmit = {handleSubmit} action="RenterPayment" onCancel={handleCancel}>
+                <Form noValidate validated = {validated} onSubmit = {handleSubmit} onCancel={handleCancel}>
                     <h4 className="rentalFormLabels mb-3">Payment Info</h4>
                     <Form.Group as={Row} className="mb-3" value = {contents.AccountName} onChange = {handleChange} >
                         <Form.Label column sm="3" className="rentalFormLabels">Account Name</Form.Label>
@@ -186,16 +187,7 @@ function Payment(props) {
                         </Form.Group>
 
                     </div>
-                    <h4 className="rentalFormLabels mb-3">Balance Due</h4>
-                    <Form.Group as={Row} className="mb-3" value = {contents.AccountName} onChange = {handleChange} >
-                        <Form.Label column sm="3" className="rentalFormLabels">Balance Due</Form.Label>
-                        <Col sm="9" >
-                            <Form.Control 
-                            readOnly
-                            value = {"$"+BalanceDue}
-                            />
-                        </Col>                    
-                </Form.Group>
+                    
                     <h4 className="rentalFormLabels mb-3">Payment Amount</h4>
                     <Form.Group as={Row} className="mb-3" value = {contents.AccountName} onChange = {handleChange} >
                         <Form.Label column sm="3" className="rentalFormLabels">Payment Amount</Form.Label>
