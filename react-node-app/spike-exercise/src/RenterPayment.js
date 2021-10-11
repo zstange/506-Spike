@@ -1,14 +1,42 @@
 import React, {useState} from "react"; 
 import { Form, Button, Row, Col, Container, InputGroup, FormControl, Dropdown, DropdownButton} from "react-bootstrap";
 import './App.css';
+import Axios from 'axios';
 
 function Payment() {
     const [validated, setValidated] = useState(false)
     const [contents, setContents] = useState({AccountName: "", RoutingNumber: "", ConfirmRoutingNumber: "",
-      AccountNumber: "", ConfirmAccountNumber: "", AccountType: "", PaymentAmount: ""});
+      AccountNumber: "", ConfirmAccountNumber: "", AccountType: "", PaymentAmount: -1});
+      
+    const [BalanceDue, setBalance] = useState(10);
+    
+    function fetchBalance() {
+        Axios.post("http://localhost:3001/GetBalance",{
+            email: "admin@gmail.com"
+            }).then((response) => {
+                if(response.data.err) {
+                    alert(response.data.err);
+                }
+                else if (response.data.value) {
+                    console.log("fromfetch"+response.data.value)
+                    setBalance(Number(response.data.value))
+                } else {
+                    console.log(response.data)
+                    alert("fetch failed")
+                }
+            });
+            
+        }
+        
+        fetchBalance();
+
+
+
+
 
     const handleSubmit = (event) => {
-      const form = event.currentTarget;
+    const form = event.currentTarget;
+    console.log(contents);
      
       if (form.checkValidity() === false) {
         event.preventDefault();
@@ -16,19 +44,41 @@ function Payment() {
       }
       
       setValidated(true);
-
+      console.log(contents.PaymentAmount)
+      let app = contents.PaymentAmount
+      console.log(app)
       if (form.checkValidity() === true) {
-          event.preventDefault();
-          alert("insert payment being sent to database here")
+
+        let newBalance = BalanceDue-contents.PaymentAmount;
+        setBalance(newBalance);
+
+
+        Axios.post("http://localhost:3001/RenterPayment",{
+            balance: app
+            }).then((response) => {
+                if(response.data.err) {
+                    alert(response.data.err);
+                }
+                else if (response.data.message) {
+                    alert(response.data.message);
+                } else {
+                    console.log(response.data)
+                    alert("Payment accepted.")
+                }
+            });
         }
+        event.preventDefault();
     };   
 
     const handleCancel = (event) => {
       setValidated(true);
     }
 
-    const handleChange = (event) => {     
-      setContents({...contents, [event.target.id]: event.target.value.trim()})
+    const handleChange = (event) => {   
+        if (event.target.id != "PaymentAmount")  
+            setContents({...contents, [event.target.id]: event.target.value.trim()})
+        else
+            setContents({...contents, [event.target.id]: event.target.value})
     }
   
     return (
@@ -132,22 +182,31 @@ function Payment() {
                         </Form.Group>
 
                     </div>
+                    <h4 className="rentalFormLabels mb-3">Balance Due</h4>
+                    <Form.Group as={Row} className="mb-3" value = {contents.AccountName} onChange = {handleChange} >
+                        <Form.Label column sm="3" className="rentalFormLabels">Balance Due</Form.Label>
+                        <Col sm="9" >
+                            <Form.Control 
+                            readOnly
+                            value = {"$"+BalanceDue}
+                            />
+                        </Col>                    
+                </Form.Group>
                     <h4 className="rentalFormLabels mb-3">Payment Amount</h4>
                     <Form.Group as={Row} className="mb-3" value = {contents.AccountName} onChange = {handleChange} >
                         <Form.Label column sm="3" className="rentalFormLabels">Payment Amount</Form.Label>
                         <Col sm="9" >
                             <Form.Control 
-                            id="Payment Amount"
+                            id="PaymentAmount"
                             pattern = "^\d+.{0,1}\d{0,2}"
                             required
                             type="text"
-                            name="Payment Amount"
+                            name="PaymentAmount"
                             placeholder="$000.00"
                             />
-                            <Form.Control.Feedback type="invalid">Must be proper dollar amount greater than 0.</Form.Control.Feedback>
+                            <Form.Control.Feedback type="invalid">Must be proper dollar amount.</Form.Control.Feedback>
                         </Col>                    
                     </Form.Group>
-
                     <Button className="m-4" type="submit" size="lg" style={{display: 'inline-block'}}>Submit</Button>          
                 </Form>
 

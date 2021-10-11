@@ -64,6 +64,60 @@ app.post("/Login", (req, res) => {
   });
 })
 
+app.post("/GetBalance", (req, res) => {
+  const email = req.body.email
+  const sqlInsert = 
+  "SELECT balance FROM dbuser WHERE email = ?"
+  db.query(sqlInsert, [email], (err, result) => {
+    if(err){
+      return res.json({err: err});
+    }
+    else if (result != ""){
+      return res.json({value: result[0].balance});
+    } else{
+        return res.json({message: "Balance fetch failed."})
+    }
+
+    
+  });
+})
+
+app.post("/RenterPayment", (req, res) => {
+  let balance = req.body.balance;
+  let currentBalance = -100;
+  const email = "admin@gmail.com"
+  const sqlInsert = 
+  "SELECT balance FROM dbuser WHERE email = ?"
+  db.query(sqlInsert, [email, balance, currentBalance], (err, result) => {
+    if(err){
+      return res.json({err: err});
+    }
+    else if (result != ""){
+       if(result[0].balance)
+          currentBalance = result[0].balance;
+        else
+          currentBalance = 0
+        balance =  Number(currentBalance) - Number(balance);
+          const sqlInsert = 
+          "UPDATE dbuser SET balance = '"+balance+"' WHERE email = "+"'"+email+"'";
+          db.query(sqlInsert, [balance,currentBalance,email], (err, result) => {
+            if(err){
+              return res.json({err: err});
+            }
+            else if (result != ""){
+              res.send({message: "Balance change successful."})
+            }
+            else{
+              res.send({message: "Balance change failed."})
+            }
+          });
+    } else{
+        return res.json({message: "User not found!"})
+    }
+  });
+  
+});
+
 app.listen(PORT, () => {
   console.log(`Server listening on ${PORT}`);
 });
