@@ -30,13 +30,8 @@ function Payment() {
         
         fetchBalance();
 
-
-
-
-
     const handleSubmit = (event) => {
     const form = event.currentTarget;
-    console.log(contents);
      
       if (form.checkValidity() === false) {
         event.preventDefault();
@@ -44,17 +39,13 @@ function Payment() {
       }
       
       setValidated(true);
-      console.log(contents.PaymentAmount)
-      let app = contents.PaymentAmount
-      console.log(app)
       if (form.checkValidity() === true) {
 
         let newBalance = BalanceDue-contents.PaymentAmount;
-        setBalance(newBalance);
 
 
         Axios.post("http://localhost:3001/RenterPayment",{
-            balance: app
+            balance: contents.PaymentAmount
             }).then((response) => {
                 if(response.data.err) {
                     alert(response.data.err);
@@ -62,12 +53,12 @@ function Payment() {
                 else if (response.data.message) {
                     alert(response.data.message);
                 } else {
-                    console.log(response.data)
                     alert("Payment accepted.")
+                    
                 }
             });
+            setBalance(newBalance);
         }
-        event.preventDefault();
     };   
 
     const handleCancel = (event) => {
