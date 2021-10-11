@@ -42,6 +42,71 @@ app.post("/CreateAccount", (req, res) => {
   });
 });
 
+app.post("/RenterRequests", (req, res) => {
+  const uid = req.body.uid
+  const message = req.body.message
+  const priority = req.body.priority
+
+  const sqlInsert = 
+  "INSERT INTO maintenencerequests (uid, message, priority) VALUES (?, ?, ?);"
+  db.query(sqlInsert, [uid, message, priority]
+    , (err, result) => {
+    if(err){
+      res.send({err: err});
+    }
+    else if (result != ""){
+      var redir = { redirect: "/RenterRequests" };
+      return res.json(redir);
+    }
+    else{
+      res.send({message: "Please fill out both message and priority."})
+    }
+  });
+});
+
+app.post("/RenterApplication", (req, res) => {
+  const uid = req.body.uid
+  const desiredApt = req.body.aptOption
+  const beds = req.body.bedOption
+  const appStatus = "pending"
+  console.log(uid)
+  console.log(desiredApt)
+  console.log(beds)
+  const sqlInsert = 
+  "UPDATE dbuser SET desiredApartment = ?, beds = ?, applicationStatus = ? WHERE uid = ?;"
+  db.query(sqlInsert, [desiredApt, beds, appStatus, uid], (err, result) => {
+    if(err){
+      return res.json({err: err});
+    }
+    else if (result != ""){
+      var redir = { redirect: "/RenterHome" };
+      return res.json(redir);
+    } else{
+        return res.json({message: "Bad input combination!"})
+    }
+
+    
+  });
+})
+
+app.post("/getAll", (req, res) => {
+  const appStatus = "pending"
+  const sqlInsert = 
+  "SELECT * FROM dbuser WHERE  applicationStatus = ?"
+  db.query(sqlInsert, [appStatus], (err, result) => {
+    if(err){
+      return res.json({err: err});
+    }
+    else if (result != ""){
+      var redir = { redirect: "/RenterHome" };
+      return res.json(redir);
+    } else{
+        return res.json({message: "Wrong username/password combination!"})
+    }
+  });
+})
+
+
 app.post("/Login", (req, res) => {
   const email = req.body.email
   const password = req.body.password
@@ -54,8 +119,8 @@ app.post("/Login", (req, res) => {
     }
     else if (result != ""){
       var user = JSON.parse(JSON.stringify(result));
-      var userInfo = { userID: user[0].uid, admin: user[0].role };
-      return res.json(userInfo);
+      var userID = { userID: user[0].uid };
+      return res.json(userID);
     } else{
         return res.json({message: "Wrong username/password combination!"})
     }
@@ -63,60 +128,6 @@ app.post("/Login", (req, res) => {
     
   });
 })
-
-app.post("/GetBalance", (req, res) => {
-  const uid = req.body.uid
-  const sqlInsert = 
-  "SELECT balance FROM dbuser WHERE uid = ?"
-  db.query(sqlInsert, [uid], (err, result) => {
-    if(err){
-      return res.json({err: err});
-    }
-    else if (result != ""){
-      return res.json({value: result[0].balance});
-    } else{
-        return res.json({message: "Balance fetch failed."})
-    }
-
-    
-  });
-})
-
-app.post("/RenterPayment", (req, res) => {
-  let balance = req.body.balance;
-  let currentBalance = -100;
-  const email = "admin@gmail.com"
-  const sqlInsert = 
-  "SELECT balance FROM dbuser WHERE email = ?"
-  db.query(sqlInsert, [email, balance, currentBalance], (err, result) => {
-    if(err){
-      return res.json({err: err});
-    }
-    else if (result != ""){
-       if(result[0].balance)
-          currentBalance = result[0].balance;
-        else
-          currentBalance = 0
-        balance =  Number(currentBalance) - Number(balance);
-          const sqlInsert = 
-          "UPDATE dbuser SET balance = '"+balance+"' WHERE email = "+"'"+email+"'";
-          db.query(sqlInsert, [balance,currentBalance,email], (err, result) => {
-            if(err){
-              return res.json({err: err});
-            }
-            else if (result != ""){
-              res.send({message: "Balance change successful."})
-            }
-            else{
-              res.send({message: "Balance change failed."})
-            }
-          });
-    } else{
-        return res.json({message: "User not found!"})
-    }
-  });
-  
-});
 
 app.listen(PORT, () => {
   console.log(`Server listening on ${PORT}`);
