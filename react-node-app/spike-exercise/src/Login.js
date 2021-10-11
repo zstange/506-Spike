@@ -33,7 +33,12 @@ function LoginPage(props) {
             alert(response.data.message);
           } else {
             props.setID(response.data.userID);
-            window.location = `/RenterHome?id=${response.data.userID}`;
+            console.log(response.data.admin)
+            if (response.data.admin) {
+              window.location = `/AdminHome?id=${response.data.userID}`; 
+            }else {
+              window.location = `/RenterHome?id=${response.data.userID}`;
+            }
           }
         });
       }          

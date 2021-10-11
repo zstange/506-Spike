@@ -7,6 +7,7 @@ import RenterApplication from './RenterApplication'
 import RenterPayment from './RenterPayment'
 import RenterRequests from './RenterRequests'
 import AdminRequests from './AdminRequests'
+import AdminHome from './AdminHome'
 import { BrowserRouter as Router, Route, Switch, useHistory} from 'react-router-dom';
 
 
@@ -51,6 +52,11 @@ class App extends React.Component {
             <Route exact path = "/RenterHome" 
               render={() => (
               <RenterHome userID={this.state.userID} />
+            )}
+            />
+            <Route exact path = "/AdminHome" 
+              render={() => (
+              <AdminHome userID={this.state.userID} />
             )}
             />
             <Route exact path = "/CreateAccount" 
