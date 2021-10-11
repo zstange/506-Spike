@@ -29,7 +29,7 @@ CREATE TABLE `spikedb`.`maintenencerequests` (
   `rid` INT NOT NULL AUTO_INCREMENT,
   `uid` INT NULL,
   `message` VARCHAR(1000) NULL,
-  `submissionDate` VARCHAR(45) NULL,
+  `priority` VARCHAR(45) NULL,
   PRIMARY KEY (`rid`),
   FOREIGN KEY (`uid`) REFERENCES dbuser(`uid`));
   
