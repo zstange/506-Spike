@@ -1,8 +1,9 @@
 import React, {useState} from "react"; 
+import Axios from 'axios';
 import { Form, Button, Row, Col, Container, InputGroup, FormControl, Dropdown, DropdownButton} from "react-bootstrap";
 import './App.css';
 
-function RentalForm() {
+function RentalForm(props) {
     const [validated, setValidated] = useState(false);
   
     const handleSubmit = (event) => {
@@ -27,6 +28,23 @@ function RentalForm() {
         console.log(event.target.elements.zipcode.value)
         console.log(event.target.elements.aptOption.value)
         console.log(event.target.elements.bedOption.value)
+		
+		Axios.post("http://localhost:3001/RenterApplication",{
+		uid: props.userID,
+        aptOption: event.target.elements.aptOption.value,
+        bedOption: event.target.elements.bedOption.value,
+        }).then((response) => {
+            if(response.data.err) {
+                alert(response.data.err);
+            }
+            else if (response.data.message) {
+                alert(response.data.message);
+            } else {
+                window.location = "/RenterHome";
+            }
+        });
+		
+		
         }          
     };   
 
@@ -192,7 +210,7 @@ class RenterApplication extends React.Component {
         <>
             <Container fluid style={{ width: 'calc(80vw - 10px)', height: 'calc(100vh - 10px)', marginTop: '40px', background: 'white', overflowY: 'scroll'}}>
                 <Row>
-                    <RentalForm/>
+                    <RentalForm userID={this.props.userID}/>
                 </Row>
             </Container>
         </>

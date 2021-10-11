@@ -1,8 +1,9 @@
 import React, {useState} from "react"; 
+import Axios from 'axios';
 import { TextArea, Form, Button, Row, Col, Container, InputGroup, FormControl, Dropdown, DropdownButton} from "react-bootstrap";
 import './App.css';
 
-function RenterRequest() {
+function RenterRequest(props) {
     const [validated, setValidated] = useState(false);
 
     const [contents, setContents] = useState({ProblemDescription: "", PriorityLevel: ""});
@@ -31,9 +32,21 @@ function RenterRequest() {
         
       // Output Caputured Data
       if (form.checkValidity() === true) {
-        event.preventDefault();
-        alert("insert request being sent to database here, note for the code after this we also need account info, and I assume problemNumber will be populated in the database")
-        let newList = requestList.filter((request) => request);
+        Axios.post("http://localhost:3001/RenterRequests",{
+		uid: props.userID,
+        message: event.target.elements.message.value,
+        priority: event.target.elements.priority.value,
+        }).then((response) => {
+            if(response.data.err) {
+                alert(response.data.err);
+            }
+            else if (response.data.message) {
+                alert(response.data.message);
+            } else {
+                window.location = "/RenterHome";
+            }
+        });
+		let newList = requestList.filter((request) => request);
         newList.push({firstName: "Walter", lastName: "White", phoneNumber: "234", email: "email2", aptOption: "Apartment 1", 
         bedOption: "1 Bed", roomNumber: "515", problem: contents.ProblemDescription, priority: contents.PriorityLevel, response: "", problemNumber: ""})
         setRequestList(newList);
@@ -106,7 +119,7 @@ function RenterRequest() {
                             as="textarea" rows={10}
                             required
                             type="textarea"
-                            name="firstName"
+                            name="message"
                         />
                         <Form.Control.Feedback type="invalid">Please provide a description of your maintenance request.</Form.Control.Feedback>
                         </Col>                  
@@ -116,7 +129,7 @@ function RenterRequest() {
                         <Form.Group as={Row} controlId="PriorityLevel" onChange = {handleChange}>
                             <Form.Label column sm="4" className="rentalFormLabels"></Form.Label>
                                 <Col sm="5">
-                                    <Form.Select aria-label="Default select example" className="mb-3" name="aptOption" required>
+                                    <Form.Select aria-label="Default select example" className="mb-3" name="priority" required>
                                         <option value="">Choose...</option>
                                         <option value={"Low"}>Low Priority</option>
                                         <option value={"Medium"}>Medium Priority</option>
@@ -148,7 +161,7 @@ class RenterRequests extends React.Component {
         <>
             <Container fluid style={{ width: 'calc(80vw - 10px)', height: 'calc(100vh - 10px)', marginTop: '40px', background: 'white', overflowY: 'scroll'}}>
                 <Row>
-                    <RenterRequest/>
+                    <RenterRequest userID={this.props.userID}/>
                 </Row>
             </Container>
         </>
