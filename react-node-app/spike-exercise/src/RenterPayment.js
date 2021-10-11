@@ -3,7 +3,7 @@ import { Form, Button, Row, Col, Container, InputGroup, FormControl, Dropdown, D
 import './App.css';
 import Axios from 'axios';
 
-function Payment() {
+function Payment(props) {
     const [validated, setValidated] = useState(false)
     const [contents, setContents] = useState({AccountName: "", RoutingNumber: "", ConfirmRoutingNumber: "",
 
@@ -13,7 +13,7 @@ function Payment() {
     
     function fetchBalance() {
         Axios.post("http://localhost:3001/GetBalance",{
-            email: "admin@gmail.com"
+            uid: props.userID
             }).then((response) => {
                 if(response.data.err) {
                     alert(response.data.err);
@@ -230,7 +230,7 @@ class RenterPayment extends React.Component {
         <>
             <Container fluid style={{ width: 'calc(80vw - 10px)', height: 'calc(100vh - 10px)', marginTop: '40px', background: 'white', overflowY: 'scroll'}}>
                 <Row>
-                    <Payment/>
+                    <Payment userID={this.props.userID}/>
                 </Row>
             </Container>
         </>
