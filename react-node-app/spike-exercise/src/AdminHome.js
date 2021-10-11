@@ -7,7 +7,6 @@ import AdminRequests from "./AdminRequests";
 import AdminPayment from "./AdminPayment";
 import {Route, withRouter} from 'react-router-dom'
 import AdminRentalApplication from "./AdminRentalApplication";
-import AdminPayment from "./AdminPayment";
 
 class AdminHome extends React.Component {
 
