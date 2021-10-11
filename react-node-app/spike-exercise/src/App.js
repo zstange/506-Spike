@@ -11,9 +11,15 @@ import { BrowserRouter as Router, Route, Switch, useHistory} from 'react-router-
 
 
 
-function App() {
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      userID: 0,
+    };
+  }
   // const [data, setData] = React.useState(null);
-  const history = useHistory();
+  
 
   // React.useEffect(() => {
   //   fetch("/")
@@ -21,57 +27,63 @@ function App() {
   //     .then((data) => setData(data.message));
   // }, []);
 
-  return (
-    <Router>
-    <div className="App">
-      <header className="App-header">
-          <Switch>
-          <Route 
-            exact path = "/" 
+  setID(id) {
+    this.setState({ userID: id });
+  }
+
+  render() {
+    return (
+      <Router>
+      <div className="App">
+        <header className="App-header">
+            <Switch>
+            <Route 
+              exact path = "/" 
+              render={() => (
+                <Login setID={(id) => this.setID(id)}/>
+              )}
+            />
+            <Route  exact path = "/Login" 
             render={() => (
-              <Login  history={history}/>
+              <Login setID={(id) => this.setID(id)}/>
             )}
-          />
-          <Route  exact path = "/Login" 
-          render={() => (
-            <Login history={history}/>
-          )}
-          />
-          <Route exact path = "/RenterHome" 
-           render={() => (
-            <RenterHome history={history} />
-          )}
-          />
-          <Route exact path = "/CreateAccount" 
-          render={() => (
-            <CreateAccount  />
-          )}
-          />
-          <Route exact path = "/RenterApplication" 
-          render={() => (
-            <RenterApplication  />
-          )}
-          />
-          <Route exact path = "/RenterPayment" 
-          render={() => (
-            <RenterPayment  />
-          )}
-          />
-          <Route path = "/RenterRequests" 
-          render={() => (
-            <RenterRequests  />
-          )}
-          />
-          <Route path = "/AdminRequests" 
-          render={() => (
-            <AdminRequests  />
-          )}
-          />
-        </Switch> 
-      </header>
-    </div>
-    </Router>
-  );
+            />
+            <Route exact path = "/RenterHome" 
+              render={() => (
+              <RenterHome userID={this.state.userID} />
+            )}
+            />
+            <Route exact path = "/CreateAccount" 
+            render={() => (
+              <CreateAccount  />
+            )}
+            />
+            <Route exact path = "/RenterApplication" 
+            render={() => (
+              <RenterApplication  />
+            )}
+            />
+            <Route exact path = "/RenterPayment" 
+            render={() => (
+              <RenterPayment  />
+            )}
+            />
+            <Route path = "/RenterRequests" 
+            render={() => (
+              <RenterRequests  />
+            )}
+            />
+            <Route path = "/AdminRequests" 
+            render={() => (
+              <AdminRequests  />
+            )}
+            />
+          </Switch> 
+        </header>
+      </div>
+      </Router>
+    );
+  }
 }
 
 export default App;
