@@ -65,10 +65,10 @@ app.post("/Login", (req, res) => {
 })
 
 app.post("/GetBalance", (req, res) => {
-  const email = req.body.email
+  const uid = req.body.uid
   const sqlInsert = 
-  "SELECT balance FROM dbuser WHERE email = ?"
-  db.query(sqlInsert, [email], (err, result) => {
+  "SELECT balance FROM dbuser WHERE uid = ?"
+  db.query(sqlInsert, [uid], (err, result) => {
     if(err){
       return res.json({err: err});
     }
