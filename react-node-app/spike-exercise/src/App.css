@@ -106,3 +106,15 @@
   font-style: normal;
 }
 
+.propertiesCardText {
+  color: black;
+  font-family: factoria,serif;
+  font-weight: 100;
+  font-style: normal;
+}
+.propertiesHeaderText {
+  color: white;
+  font-family: factoria,serif;
+  font-weight: 100;
+  font-style: normal;
+}
