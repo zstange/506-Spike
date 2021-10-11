@@ -1,13 +1,18 @@
 import React from "react";
 import "./App.css";
 import SideBar from "./SideBar";
-import PropertiesArea from "./PropertiesArea";
 import MyUserAccount from "./MyUserAccount"
 import { Tab, Tabs } from "react-bootstrap";
-import RenterApplication from "./RenterApplication";
 import AdminRequests from "./AdminRequests";
+import {Route, withRouter} from 'react-router-dom'
 
-class RenterHome extends React.Component {
+class AdminHome extends React.Component {
+
+  getUserID() {
+    const search = this.props.location.search; // returns the URL query String
+    const params = new URLSearchParams(search); 
+    return params.get('id'); 
+  }
 
   render() {
     return (
@@ -29,7 +34,7 @@ class RenterHome extends React.Component {
               eventKey="account" title="My Account"
             >
               <div>
-                  <MyUserAccount/>
+                  <MyUserAccount userID={this.getUserID()}/>
               </div>
             </Tab>
             <Tab
@@ -55,4 +60,4 @@ class RenterHome extends React.Component {
   }
 }
 
-export default RenterHome;
+export default withRouter(AdminHome);

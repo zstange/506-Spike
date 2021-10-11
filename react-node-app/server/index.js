@@ -54,8 +54,8 @@ app.post("/Login", (req, res) => {
     }
     else if (result != ""){
       var user = JSON.parse(JSON.stringify(result));
-      var userID = { userID: user[0].uid };
-      return res.json(userID);
+      var userInfo = { userID: user[0].uid, admin: user[0].role };
+      return res.json(userInfo);
     } else{
         return res.json({message: "Wrong username/password combination!"})
     }
