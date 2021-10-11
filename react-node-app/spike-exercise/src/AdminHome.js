@@ -4,6 +4,7 @@ import SideBar from "./SideBar";
 import MyUserAccount from "./MyUserAccount"
 import { Tab, Tabs } from "react-bootstrap";
 import AdminRequests from "./AdminRequests";
+import AdminPayment from "./AdminPayment";
 import {Route, withRouter} from 'react-router-dom'
 
 class AdminHome extends React.Component {
@@ -49,6 +50,13 @@ class AdminHome extends React.Component {
             >
               <div>
                   <AdminRequests/>
+              </div>
+            </Tab>
+             <Tab
+              eventKey="payments" title="Handle Payments"
+              >
+              <div>
+                  <AdminPayment/>
               </div>
             </Tab>
           </Tabs>
